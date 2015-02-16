@@ -1,5 +1,6 @@
 <?php
 include('includes/haut.inc.php');
+require_once('/usr/share/php/smarty3/Smarty.class.php');
 
 /*Affichage des articles sous Smarty */
 $bdd = new PDO('mysql:host=localhost;dbname=blog_wk', 'root', 'lprsc');
@@ -15,7 +16,7 @@ $app = 3;
 $debut =($app*$page) - $app;// Je choisis le nbr d'affichage d'articles par page.
 
 
-echo "allo quoi";
+
 
 if(isset($_POST['r']))
 {
@@ -24,16 +25,16 @@ if(isset($_POST['r']))
 }
 else
 {
-	echo "je sis ici";
+	
 	$query=$bdd->prepare("SELECT * FROM articles ORDER BY  `articles`.`Date` Desc LIMIT $debut,$app");
 	$query1=$bdd->prepare("SELECT count(*) as nb_article FROM articles");
-	var_dump($query);
+	
 }
  
 $query->execute();
 $query1->execute();
 while ($data = $query->fetch()) {
-	echo "dans le while";
+	
 	$afficher_articles[] = $data;
 
 }
@@ -50,7 +51,6 @@ while($data = $query1->fetch()){
 /* Récupérer le p pour la pagination */
 /*----------------------*/
 
-require_once('usr/share/php/smarty3/Smarty.class.php');
 
 $index = new Smarty();
 
